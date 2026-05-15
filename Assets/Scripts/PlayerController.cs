@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed = 8.0f;
     public int health = 5;
+    public Text scoreText;
     private int score = 0;
     Rigidbody rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             score += 1;
+            SetScoreText();
             transform.localScale = new Vector3(1 + score * 0.2f, 1 + score * 0.2f, 1 + score * 0.2f);
             if (speed <= 3.5f)
                 speed = speed - 0.1f + (score * 0.1f) * 0.010f;
@@ -70,6 +73,12 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("You need at least 3 points to win!");
             }
         }
+    }
+
+    void SetScoreText()
+    {
+        scoreText.text = "Score : " + score;
+        Debug.Log("score");
     }
     
     IEnumerator ResetRunCoroutine(int seconds)
