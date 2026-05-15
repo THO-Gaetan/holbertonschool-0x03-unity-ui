@@ -3,12 +3,16 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class PlayerController : MonoBehaviour
 {
     public float speed = 8.0f;
     public int health = 5;
     public Text scoreText;
     public Text healthText;
+    public GameObject winloseCanvas;
+    public Image winloseImage;
+    public Text winloseText;
     private int score = 0;
     Rigidbody rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -22,9 +26,9 @@ public class PlayerController : MonoBehaviour
         if (health == 0)
         {
             Debug.Log("Game Over!");
+            SetLoseCanvas();
             enabled = false;
-
-            StartCoroutine(ResetRunCoroutine(3));
+            StartCoroutine(ReloadScene(3));
         }
     }
 
@@ -67,8 +71,9 @@ public class PlayerController : MonoBehaviour
             if (score >= 3)
             {
                 Debug.Log("You win!");
+                SetWinCanvas();
                 enabled = false;
-                StartCoroutine(ResetRunCoroutine(5));
+                StartCoroutine(ReloadScene(5));
             }
             else
             {
@@ -88,8 +93,24 @@ public class PlayerController : MonoBehaviour
         healthText.text = "Health: " + health;
         Debug.Log("health");
     }
+
+    void SetWinCanvas()
+    {
+        winloseCanvas.SetActive(true);
+        winloseImage.color = new Color(0f, 1f, 0f);
+        winloseText.text = "You Win!";
+        winloseText.color = new Color(0f, 0f, 0f);
+    }
+
+    void SetLoseCanvas()
+    {
+        winloseCanvas.SetActive(true);
+        winloseImage.color = new Color(1f, 0f, 0f);
+        winloseText.text = "Game Over!";
+        winloseText.color = new Color(1f, 1f, 1f);
+    }
     
-    IEnumerator ResetRunCoroutine(int seconds)
+    IEnumerator ReloadScene(int seconds)
     {
         Debug.Log("Revive after " + seconds + " seconds");
         yield return new WaitForSeconds(seconds);
