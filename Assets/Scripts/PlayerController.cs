@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 8.0f;
     public int health = 5;
     public Text scoreText;
+    public Text healthText;
     private int score = 0;
     Rigidbody rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Trap"))
         {
             health -= 1;
+            SetHealthText();
         }
         if (other.gameObject.CompareTag("Goal"))
         {
@@ -79,6 +81,12 @@ public class PlayerController : MonoBehaviour
     {
         scoreText.text = "Score : " + score;
         Debug.Log("score");
+    }
+
+    void SetHealthText()
+    {
+        healthText.text = "Health: " + health;
+        Debug.Log("health");
     }
     
     IEnumerator ResetRunCoroutine(int seconds)
