@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
             enabled = false;
             StartCoroutine(ReloadScene(3));
         }
+        if (Input.GetKey(KeyCode.Escape))
+            SceneManager.LoadScene("menu");
     }
 
     void FixedUpdate()
